@@ -1,0 +1,33 @@
+---
+- name: Install NGINX
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+
+- name: Remove default NGINX configuration
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+    notify: Restart NGINX
+
+- name: Create Nginx Reverse proxy configuration
+  ansible.builtin.template:
+    src: default.j2
+    dest: /etc/nginx/sites-available/nodejs-service
+    mode: '0644'
+    notify: Restart Nginx
+
+- name: Enable nginx
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/nodejs-service
+    dest: /etc/nginx/sites-enabled/nodejs-service
+    state: link
+    notify: Restart Nginx
+
+- name: Ensure nginx is running
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+
+

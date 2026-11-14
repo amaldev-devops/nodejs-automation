@@ -1,0 +1,8 @@
+---
+- name: Add deployment public key
+  ansible.posix.authorized_key:
+    user: ubuntu
+    key: "{{ deploy_public_key }}"
+    state: present
+    when: deploy_public_key is defined
+

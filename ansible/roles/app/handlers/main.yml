@@ -1,0 +1,6 @@
+---
+- name: Restart Node.js application
+  ansible.builtin.systemd:
+    name: nodejs-app
+    state: restarted
+    daemon_reload: true

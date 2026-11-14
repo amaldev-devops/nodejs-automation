@@ -1,0 +1,17 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+*.tfplan
+
+*.pem
+*.key
+
+.env
+.env.*
+
+node_modules/
+npm-debug.log*
+
+*.retry
+.DS_Store

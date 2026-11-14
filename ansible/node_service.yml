@@ -1,0 +1,24 @@
+---
+- name: Configure Node.js server
+  hosts: webservers
+  become: true
+
+  vars:
+    app_repo_url: "https://github.com/amaldev-devops/nodejs-automation.git"
+    app_directory: "/opt/nodejs-automation"
+
+  roles:
+    - role: base
+      tags: [base]
+
+    - role: ssh
+      tags: [ssh]
+
+    - role: nodejs
+      tags: [nodejs]
+
+    - role: nginx
+      tags: [nginx]
+
+    - role: app
+      tags: [app]

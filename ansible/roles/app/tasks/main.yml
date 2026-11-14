@@ -1,0 +1,37 @@
+---
+- name: Create application directory
+  ansible.builtin.file:
+    path: "{{ app_directory }}"
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: '0755'
+
+- name: Clone application repository
+  ansible.builtin.git:
+    repo: "{{ app_repo_url }}"
+    dest: "{{ app_directory }}"
+    version: main
+    update: true
+  become: false
+
+- name: Install application dependencies
+  ansible.builtin.command:
+    cmd: npm install --omit=dev
+    chdir: "{{ app_directory }}/app"
+  become: false
+  notify: Restart Node.js application
+
+- name: Create systemd service
+  ansible.builtin.template:
+    src: nodejs-app.service.j2
+    dest: /etc/systemd/system/nodejs-app.service
+    mode: '0644'
+  notify: Restart Node.js application
+
+- name: Enable and start application
+  ansible.builtin.systemd:
+    name: nodejs-app
+    enabled: true
+    state: started
+    daemon_reload: true

@@ -1,0 +1,10 @@
+{
+  "name": "nodejs-automation",
+  "version": "1.0.0",
+  "description": "Node.js deployment project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {}
+}
