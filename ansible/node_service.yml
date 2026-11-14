@@ -6,6 +6,7 @@
   vars:
     app_repo_url: "https://github.com/amaldev-devops/nodejs-automation.git"
     app_directory: "/opt/nodejs-automation"
+    deploy_public_key: "{{ lookup('ansible.builtin.file', '/root/.ssh/nodejs-key.pub') }}"
 
   roles:
     - role: base
